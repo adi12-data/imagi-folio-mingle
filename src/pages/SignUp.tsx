@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 
 const SignUp: React.FC = () => {
   const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -40,7 +42,7 @@ const SignUp: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      const success = await signup(username, email, password);
+      const success = await signup(email, password, username, fullName);
       if (success) {
         navigate('/');
       }
@@ -70,6 +72,19 @@ const SignUp: React.FC = () => {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
+                />
+                <p className="text-xs text-muted-foreground">
+                  This will be your public username and cannot be changed later
+                </p>
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Full Name (Optional)</Label>
+                <Input
+                  id="fullName"
+                  placeholder="John Doe"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                 />
               </div>
               
